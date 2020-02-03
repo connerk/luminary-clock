@@ -20,14 +20,19 @@ int hand_hour_color = 0xff0000;
 int hand_minute_color = 0x00ff00;
 int hand_second_color = 0x0000ff;
 
+// types
+int setTimezone(String command);
 
 // setup() runs once, when the device is first turned on.
 void setup() {
   
+  // register Particle Cloud variables and functions
   Particle.variable("timezone", timezone);
   Particle.variable("hand_hour_color", hand_hour_color);
   Particle.variable("hand_minute_color", hand_minute_color);
   Particle.variable("hand_second_color", hand_second_color);
+
+  Particle.function("set_timezone", setTimezone);
 
   pixels.begin();
 
@@ -55,8 +60,10 @@ void loop() {
 
 }
 
-void setTimezone(){
-
+int setTimezone(String command){
+  if (!isValidNumber(command)) { return -1; }
+  timezone = command.toInt();
+  return 1;
 }
 
 void setHandColors(){
@@ -71,4 +78,9 @@ void setPixelColorHex(Adafruit_NeoPixel neo, int pixelIndex, int hexColor){
 
   neo.setPixelColor(pixelIndex,r,g,b);
 
-}
+boolean isValidNumber(String str){
+  for(byte i=0;i<str.length();i++){
+    if(isDigit(str.charAt(i))) return true;
+  }
+   return false;
+} 

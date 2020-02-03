@@ -1,0 +1,9 @@
+.vscode/launch.json
+
+luminary-firmware/.vscode/
+
+luminary-firmware/lib/
+
+luminary-firmware/target/
+
+luminary-firmware/src/luminary-firmware.cpp
